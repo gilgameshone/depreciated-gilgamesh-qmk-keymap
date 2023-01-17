@@ -1,0 +1,1 @@
+qmk flash -kb crkbd -km gilgamesh -e CONVERT_TO=kb2040
