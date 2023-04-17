@@ -27,8 +27,8 @@ enum crkbd_layers {
     _DVARF,
     _DVORAK,
     _QWERTY,
-    _NUM,
-    _NAV,
+    _LWR,
+    _RSE,
     _SYM,
     _EXT,
     _MSE,
@@ -37,8 +37,8 @@ enum crkbd_layers {
 };
 
 
-#define NUM MO(_NUM)
-#define NAV MO(_NAV)
+#define LWR MO(_LWR)
+#define RSE MO(_RSE)
 #define SYM MO(_SYM)
 #define EXT MO(_EXT)
 #define MSE MO(_MSE)
@@ -58,11 +58,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   case GOOGL:
     if (record->event.pressed) {
       // when keycode GOOGL is pressed
-      SEND_STRING(SS_DOWN(X_LGUI)SS_TAP(X_C)SS_UP(X_LGUI));
-      SEND_STRING(SS_DOWN(X_LGUI)SS_DOWN(X_LCTL)SS_DOWN(X_LSFT)SS_DOWN(X_LALT)SS_TAP(X_SPC)SS_UP(X_LALT)SS_UP(X_LSFT)SS_UP(X_LCTL)SS_UP(X_LGUI));
+      SEND_STRING(SS_DOWN(X_LGUI)SS_TAP(X_C)SS_UP(X_LGUI)); // command C
+      SEND_STRING(SS_DOWN(X_LGUI)SS_DOWN(X_LCTL)SS_DOWN(X_LSFT)SS_DOWN(X_LALT)SS_TAP(X_SPC)SS_UP(X_LALT)SS_UP(X_LSFT)SS_UP(X_LCTL)SS_UP(X_LGUI));   // open alfred
       wait_ms(50);
-      SEND_STRING(SS_TAP(X_G)SS_TAP(X_SPC));
-      SEND_STRING(SS_DOWN(X_LGUI)SS_TAP(X_V)SS_UP(X_LGUI)SS_TAP(X_ENT));
+      SEND_STRING(SS_TAP(X_G)SS_TAP(X_SPC));  // tap G
+      SEND_STRING(SS_DOWN(X_LGUI)SS_TAP(X_V)SS_UP(X_LGUI)SS_TAP(X_ENT)); // command V + enter
     } else {
       // when keycode GOOGL is released
     }
@@ -70,11 +70,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   case GTRNS:
     if (record->event.pressed) {
       // when keycode GTRNS is pressed
-      SEND_STRING(SS_DOWN(X_LGUI)SS_TAP(X_C)SS_UP(X_LGUI));
-  SEND_STRING(SS_DOWN(X_LGUI)SS_DOWN(X_LCTL)SS_DOWN(X_LSFT)SS_DOWN(X_LALT)SS_TAP(X_SPC)SS_UP(X_LALT)SS_UP(X_LSFT)SS_UP(X_LCTL)SS_UP(X_LGUI));
+      SEND_STRING(SS_DOWN(X_LGUI)SS_TAP(X_C)SS_UP(X_LGUI)); // command C
+  SEND_STRING(SS_DOWN(X_LGUI)SS_DOWN(X_LCTL)SS_DOWN(X_LSFT)SS_DOWN(X_LALT)SS_TAP(X_SPC)SS_UP(X_LALT)SS_UP(X_LSFT)SS_UP(X_LCTL)SS_UP(X_LGUI)); // open alfred
       wait_ms(50);
-      SEND_STRING(SS_TAP(X_T)SS_TAP(X_SPC));
-      SEND_STRING(SS_DOWN(X_LGUI)SS_TAP(X_V)SS_UP(X_LGUI)SS_TAP(X_ENT));
+      SEND_STRING(SS_TAP(X_T)SS_TAP(X_SPC));  // tap T
+      SEND_STRING(SS_DOWN(X_LGUI)SS_TAP(X_V)SS_UP(X_LGUI)SS_TAP(X_ENT));  // command V + enter
     } else {
       // when keycode GTRNS is released
     }
@@ -82,13 +82,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   case DFINE:
     if (record->event.pressed) {
       // when keycode DFINE is pressed
-      SEND_STRING(SS_DOWN(X_LGUI)SS_TAP(X_C)SS_UP(X_LGUI));
-SEND_STRING(SS_DOWN(X_LGUI)SS_DOWN(X_LCTL)SS_DOWN(X_LSFT)SS_DOWN(X_LALT)SS_TAP(X_SPC)SS_UP(X_LALT)SS_UP(X_LSFT)SS_UP(X_LCTL)SS_UP(X_LGUI));
+      SEND_STRING(SS_DOWN(X_LGUI)SS_TAP(X_C)SS_UP(X_LGUI));  // command C
+SEND_STRING(SS_DOWN(X_LGUI)SS_DOWN(X_LCTL)SS_DOWN(X_LSFT)SS_DOWN(X_LALT)SS_TAP(X_SPC)SS_UP(X_LALT)SS_UP(X_LSFT)SS_UP(X_LCTL)SS_UP(X_LGUI)); // open alfred
       wait_ms(50);
-      SEND_STRING(SS_TAP(X_D)SS_TAP(X_SPC));
-      SEND_STRING(SS_DOWN(X_LGUI)SS_TAP(X_V)SS_UP(X_LGUI));
-      wait_ms(70);
-      SEND_STRING(SS_TAP(X_ENT));
+      SEND_STRING(SS_TAP(X_D)SS_TAP(X_SPC)); // tap D
+      SEND_STRING(SS_DOWN(X_LGUI)SS_TAP(X_V)SS_UP(X_LGUI)); // command V
+      wait_ms(90); // wait
+      SEND_STRING(SS_TAP(X_ENT)); // enter
     } else {
       // when keycode DFINE is released
     }
@@ -198,12 +198,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
       KC_COMM,  KC_DOT, KC_MINS,    KC_C,    KC_J,                         KC_K,    KC_M,    KC_B,   KC_X,    KC_Z,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
-                                  KC_TAB,     NUM,  KC_SPC,  OSM(MOD_LSFT), NAV,   KC_ENT
+                                  KC_TAB,     LWR,  KC_SPC,  OSM(MOD_LSFT), RSE,   KC_ENT
                              //`--------------------------'  `--------------------------'
-
   ),
   [_DVORAK] = LAYOUT_split_3x5_3(
-
   //,--------------------------------------------.                    ,--------------------------------------------.
       JP_QUOT, KC_COMM,  KC_DOT,    KC_P,    KC_Y,                         KC_F,    KC_G,    KC_C,    KC_R,    KC_L,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
@@ -211,13 +209,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
       KC_MINS,    KC_Q,    KC_J,    KC_K,    KC_X,                         KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
-                                  KC_TAB,   NUM,  KC_SPC,  OSM(MOD_LSFT),    NAV,  KC_ENT
+                                  KC_TAB,   LWR,  KC_SPC,    OSM(MOD_LSFT), RSE,  KC_ENT
                              //`--------------------------'  `--------------------------'
-
-
   ),
   [_QWERTY] = LAYOUT_split_3x5_3(
-
   //,--------------------------------------------.                    ,--------------------------------------------.
          KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
@@ -225,10 +220,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
          KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
-                                  KC_TAB,   NUM,  KC_SPC,  OSM(MOD_LSFT),    NAV,  KC_ENT
+                                  KC_TAB,   LWR,  KC_SPC,    OSM(MOD_LSFT), RSE,  KC_ENT
                              //`--------------------------'  `--------------------------'
   ),
-  [_NUM] = LAYOUT_split_3x5_3(
+  [_LWR] = LAYOUT_split_3x5_3(
   //,--------------------------------------------.                    ,--------------------------------------------.
       XXXXXXX,  KC_MEH, KC_HYPR, XXXXXXX, XXXXXXX,                      KC_PPLS,    KC_7,    KC_8,    KC_9, KC_PAST,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
@@ -236,10 +231,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
       XXXXXXX,    FUN2,    FUN1,     SYM, XXXXXXX,                       JP_YEN,    KC_1,    KC_2,    KC_3,    KC_0,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
-                                 XXXXXXX,     NUM, XXXXXXX,     KC_DEL,     SYM, KC_BSPC
+                                 XXXXXXX,     LWR, XXXXXXX,     KC_DEL,     SYM, KC_BSPC
                              //`--------------------------'  `--------------------------'
   ),
-  [_NAV] = LAYOUT_split_3x5_3(
+  [_RSE] = LAYOUT_split_3x5_3(
   //,--------------------------------------------.                    ,--------------------------------------------.
       G(KC_Z), G(KC_X), G(KC_C), G(KC_V),LSG(KC_Z),                     XXXXXXX, XXXXXXX, KC_HYPR,  KC_MEH, XXXXXXX,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
@@ -247,18 +242,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
       KC_HOME, KC_PGUP, KC_PGDN,  KC_END, KC_NUHS,                      XXXXXXX,     EXT,     MSE, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
-                                 KC_ESC,   EXT,   KC_SPC, OSM(MOD_LSFT),  NAV,  KC_ENT
+                                 KC_ESC,   EXT,   KC_SPC,      XXXXXXX,     RSE, XXXXXXX
                              //`--------------------------'  `--------------------------'
   ),
   [_SYM] = LAYOUT_split_3x5_3(
   //,--------------------------------------------.                    ,--------------------------------------------.
-      XXXXXXX,  KC_MEH, KC_HYPR, XXXXXXX, XXXXXXX,                      JP_COLN, JP_LBRC, JP_RBRC, XXXXXXX, JP_SCLN,
+      XXXXXXX,  KC_MEH, KC_HYPR, XXXXXXX, XXXXXXX,                      JP_SCLN, JP_LBRC, JP_RBRC, XXXXXXX, JP_COLN,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
       KC_LSFT, KC_LALT, KC_LGUI, KC_LCTL, XXXXXXX,                       JP_EQL, JP_LPRN, JP_RPRN, JP_AMPR, JP_QUES,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      JP_PIPE, JP_LCBR, JP_RCBR, JP_HASH, JP_UNDS,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
-                                  KC_TAB,     NUM,  KC_SPC, OSM(MOD_LSFT),  NAV,  KC_ENT
+                                 XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX
                              //`--------------------------'  `--------------------------'
   ),
   [_EXT] = LAYOUT_split_3x5_3(
@@ -269,7 +264,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
       XXXXXXX,   DFINE,   GTRNS,   GOOGL, XXXXXXX,                      XXXXXXX,     EXT,     MSE, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
-                                  KC_TAB,     NUM,  KC_SPC,  OSM(MOD_LSFT), NAV,  KC_ENT
+                                 XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX
                              //`--------------------------'  `--------------------------'
   ),
   [_MSE] = LAYOUT_split_3x5_3(
@@ -280,7 +275,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
       KC_WH_L, KC_WH_U, KC_WH_D, KC_WH_R,LSG(KC_3),                     KC_WAKE, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
-                                  KC_TAB,     NUM,  KC_SPC,  OSM(MOD_LSFT), NAV,  KC_ENT
+                                 XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX
                              //`--------------------------'  `--------------------------'
   ),
   [_FUN1] = LAYOUT_split_3x5_3(
@@ -291,7 +286,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
       OS_TOGG, XXXXXXX, XXXXXXX, XXXXXXX,DF(_QWERTY),                   KC_PAUS,   KC_F1,   KC_F2,   KC_F3,   KC_F4,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
-                                  KC_TAB,     NUM,  KC_SPC,  OSM(MOD_LSFT), NAV,  KC_ENT
+                                 XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX
                              //`--------------------------'  `--------------------------'
   ),
   [_FUN2] = LAYOUT_split_3x5_3(
@@ -302,7 +297,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
        QK_RBT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX,  KC_F13,  KC_F14,  KC_F15,  KC_F16,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
-                                  KC_TAB,     NUM,  KC_SPC,  OSM(MOD_LSFT), NAV,  KC_ENT
+                                 XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX
                              //`--------------------------'  `--------------------------'
   )
 };
@@ -333,8 +328,8 @@ void oled_render_layer_state(void) {
   DISPLAY_LAYER_NAME(_MSE, "MSE");
   DISPLAY_LAYER_NAME(_EXT, "EXT");
   DISPLAY_LAYER_NAME(_SYM, "SYM");
-  DISPLAY_LAYER_NAME(_NAV, "NAV");
-  DISPLAY_LAYER_NAME(_NUM, "NUM");
+  DISPLAY_LAYER_NAME(_RSE, "RSE");
+  DISPLAY_LAYER_NAME(_LWR, "LWR");
   DISPLAY_LAYER_NAME(_DVARF, "DVARF");
   DISPLAY_LAYER_NAME(_DVORAK, "DVORAK");
   DISPLAY_LAYER_NAME(_QWERTY, "QWERTY");
